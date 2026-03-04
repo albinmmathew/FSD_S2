@@ -1,0 +1,213 @@
+<!-- 
+Use Bootstrap 5 for layout and responsive design. Implement Login and Registration for user and admin. Use LocalStorage for CRUD operations. Dynamically render products.
+@ALBIN MAMMEN MATHEW
+Roll No: 08 
+Date: 16/01/2026
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeMusic | Premium Instruments</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary navbar-material fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="navigate('home')"><strong>Vibe</strong>Music</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav" id="nav-links">
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="mt-5 pt-5 mb-5 container-fluid" id="spa-container">
+
+        <!-- Home Section -->
+        <section id="view-home" class="spa-section active">
+            <div class="bg-dark text-white py-5 mb-5"
+                style="border-radius: 0 0 50px 50px; background: linear-gradient(135deg, #1a1a1a 0%, #3700b3 100%); box-shadow: var(--mdc-shadow-1);">
+                <div class="container text-center py-5">
+                    <h1 class="display-4 fw-bold mb-3">Your Journey Starts with a Note</h1>
+                    <p class="lead mb-4">Discover professional instruments, vintage vinyl, and studio gear.</p>
+                    <button onclick="navigate('products')" class="btn btn-material btn-lg px-5 py-3"
+                        style="background-color: var(--secondary); color: black;">Browse Collection</button>
+                </div>
+            </div>
+            <div class="container mb-5">
+                <h2 class="text-center fw-bold mb-4">Top Rated Instruments</h2>
+                <div class="row g-4" id="home-products"></div>
+                <div class="text-center mt-5">
+                    <button onclick="navigate('products')"
+                        class="btn btn-outline-primary btn-lg px-5 text-uppercase">See All Gear</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Section -->
+        <section id="view-login" class="spa-section">
+            <div class="container" style="max-width: 400px; margin-top: 80px;">
+                <div class="card card-material p-4">
+                    <h3 class="text-center mb-4" style="color: var(--primary);">Welcome Back, Musician</h3>
+                    <form id="login-form">
+                        <div id="login-error" class="text-danger mb-3 text-center" style="display: none;"></div>
+                        <div class="form-material">
+                            <input type="text" id="login-user" class="form-control" placeholder=" " required>
+                            <label>Username</label>
+                        </div>
+                        <div class="form-material">
+                            <input type="password" id="login-pass" class="form-control" placeholder=" " required>
+                            <label>Password</label>
+                        </div>
+                        <button type="submit" class="btn btn-material w-100 mt-3">Log In</button>
+                        <div class="text-center mt-3">
+                            <span class="text-muted">New here?</span>
+                            <a href="#" onclick="navigate('register')" class="text-primary text-decoration-none">Create
+                                Academy Account</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Register Section -->
+        <section id="view-register" class="spa-section">
+            <div class="container" style="max-width: 450px; margin-top: 80px;">
+                <div class="card card-material p-4">
+                    <h3 class="text-center mb-4" style="color: var(--primary);">Join the VibeMusic Family</h3>
+                    <form id="register-form">
+                        <div id="reg-error" class="text-danger mb-3 text-center" style="display: none;"></div>
+                        <div class="form-material">
+                            <input type="text" id="reg-user" class="form-control" placeholder=" " required
+                                minlength="4">
+                            <label>Choose Username</label>
+                        </div>
+                        <div class="form-material">
+                            <input type="password" id="reg-pass" class="form-control" placeholder=" " required
+                                minlength="6">
+                            <label>Password</label>
+                        </div>
+                        <div class="form-material">
+                            <input type="password" id="reg-confirm" class="form-control" placeholder=" " required
+                                minlength="6">
+                            <label>Confirm Password</label>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-muted" style="font-size: 0.85em;">Are you an Artist or
+                                Manager?</label>
+                            <select id="reg-role" class="form-select border-0 border-bottom rounded-0"
+                                style="box-shadow: none;" required>
+                                <option value="user">Artist (Regular User)</option>
+                                <option value="admin">Manager (Administrator)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-material w-100 mt-3">Register</button>
+                        <div class="text-center mt-3">
+                            <span class="text-muted">Already a member?</span>
+                            <a href="#" onclick="navigate('login')" class="text-primary text-decoration-none">Sign in
+                                here</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Listing Section -->
+        <section id="view-products" class="spa-section">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold">Our Collection</h2>
+                    <div id="admin-actions"></div>
+                </div>
+                <div class="row g-4" id="products-list"></div>
+            </div>
+        </section>
+
+        <!-- Product Management Section -->
+        <section id="view-manage-product" class="spa-section">
+            <div class="container" style="max-width: 600px; margin-top: 60px;">
+                <div class="card card-material p-4">
+                    <h3 class="text-center mb-4 text-primary" id="manage-title">Inventory Management</h3>
+                    <form id="manage-product-form">
+                        <input type="hidden" id="prod-id">
+                        <div class="form-material mb-4">
+                            <input type="text" id="prod-name" class="form-control" placeholder=" " required>
+                            <label>Instrument Name</label>
+                        </div>
+                        <div class="form-material mb-4">
+                            <input type="number" step="0.01" id="prod-price" class="form-control" placeholder=" "
+                                required min="0">
+                            <label>Price (₹)</label>
+                        </div>
+                        <div class="form-material mb-4">
+                            <input type="url" id="prod-image" class="form-control" placeholder=" " required>
+                            <label>Image URL</label>
+                        </div>
+                        <div class="form-material mb-4 mt-4">
+                            <input type="number" id="prod-stock" class="form-control" placeholder=" " required min="0">
+                            <label>In Stock</label>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label text-muted" style="font-size: 0.85em;">Detailed Description</label>
+                            <textarea id="prod-desc" class="form-control border-0 border-bottom rounded-0" rows="3"
+                                style="box-shadow: none;" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-material w-100" id="manage-btn">Update Inventory</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shopping Cart Section -->
+        <section id="view-cart" class="spa-section">
+            <div class="container">
+                <h2 class="fw-bold mb-4">Your Gear List</h2>
+                <div class="row">
+                    <div class="col-lg-8" id="cart-items"></div>
+                    <div class="col-lg-4 mt-4 mt-lg-0">
+                        <div class="card card-material p-4 sticky-top" style="top: 80px;">
+                            <h4 class="mb-4">Order Summary</h4>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Subtotal</span>
+                                <span id="cart-subtotal" class="fw-bold">₹0.00</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Shipping & Tax</span>
+                                <span id="cart-tax" class="fw-bold">₹0.00</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between mb-4">
+                                <span class="fs-5 fw-bold">Total</span>
+                                <span id="cart-total" class="fs-5 fw-bold text-primary">₹0.00</span>
+                            </div>
+                            <button class="btn btn-material w-100 py-3" onclick="handleCheckout()">Complete
+                                Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-dark text-white text-center py-4 mt-auto">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 VibeMusic Emporium. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
