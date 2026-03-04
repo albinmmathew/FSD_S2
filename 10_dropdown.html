@@ -1,0 +1,93 @@
+<!-- 
+Implement dropdown-based content rendering using JavaScript.
+@ALBIN MAMMEN MATHEW
+Roll No: 08 
+Date: 19/12/2025
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Info</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            padding: 40px 20px;
+            background: #f8f9fa;
+            text-align: center;
+        }
+
+        h2 {
+            font-weight: 400;
+        }
+
+        select {
+            padding: 12px 20px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            outline: none;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        select:focus {
+            border-color: #1a73e8;
+        }
+
+        #content {
+            background: #fff;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            padding: 30px;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            display: none;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            color: #3c4043;
+            line-height: 1.6;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Select a Topic</h2>
+    <select id="topics">
+        <option value="">-- Choose a topic --</option>
+        <option value="html">HTML</option>
+        <option value="css">CSS</option>
+        <option value="js">JavaScript</option>
+    </select>
+
+    <div id="content"></div>
+
+    <script>
+        const data = {
+            html: "HTML (HyperText Markup Language) is the most basic building block of the Web. It defines the meaning and structure of web content.",
+            css: "CSS (Cascading Style Sheets) is a stylesheet language used to describe the presentation of a document written in HTML or XML.",
+            js: "JavaScript is a programming language that enables interactive web pages. It is an essential part of web applications."
+        };
+
+        document.getElementById('topics').addEventListener('change', function () {
+            const val = this.value;
+            const box = document.getElementById('content');
+            if (val) {
+                box.innerText = data[val];
+                box.style.display = 'block';
+            } else {
+                box.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
