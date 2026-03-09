@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask AJAX Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6200ee;
+            --bg: #f5f5f5;
+            --text: #202124;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .calculator-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+        }
+
+        h2 {
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            color: #5f6368;
+            margin-bottom: 0.4rem;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: #3700b3;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        #result-container {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            min-height: 3rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .error {
+            color: #d93025;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="calculator-card">
+        <h2>AJAX Calculator</h2>
+
+        <div class="input-group">
+            <label>Number 1</label>
+            <input type="number" id="num1" placeholder="0">
+        </div>
+
+        <div class="input-group">
+            <label>Operation</label>
+            <select id="operator">
+                <option value="add">Addition (+)</option>
+                <option value="subtract">Subtraction (-)</option>
+                <option value="multiply">Multiplication (*)</option>
+                <option value="divide">Division (/)</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Number 2</label>
+            <input type="number" id="num2" placeholder="0">
+        </div>
+
+        <button onclick="calculate()">Calculate</button>
+
+        <div id="result-container">
+            <span id="result">Result will appear here</span>
+        </div>
+    </div>
+
+    <script>
+        async function calculate() {
+            const num1 = document.getElementById('num1').value;
+            const num2 = document.getElementById('num2').value;
+            const operator = document.getElementById('operator').value;
+            const resultSpan = document.getElementById('result');
+
+            resultSpan.innerText = 'Calculating...';
+            resultSpan.className = '';
+
+            try {
+                const response = await fetch('/calculate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        num1: num1,
+                        num2: num2,
+                        operator: operator
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultSpan.innerText = `Result: ${data.result}`;
+                } else {
+                    resultSpan.innerText = data.error;
+                    resultSpan.className = 'error';
+                }
+            } catch (error) {
+                resultSpan.innerText = 'Server error occurred';
+                resultSpan.className = 'error';
+            }
+        }
+    </script>
+
+</body>
+
+</html>
