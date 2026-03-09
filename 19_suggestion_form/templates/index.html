@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggestion Form | AJAX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --bg: #f8f9fa;
+            --text: #202124;
+            --card-bg: #ffffff;
+            --success: #1e8e3e;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            border: 1px solid #dadce0;
+        }
+
+        h2 {
+            font-weight: 300;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            color: #5f6368;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 0.9rem;
+            border: 1px solid #dadce0;
+            border-radius: 10px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+        }
+
+        textarea {
+            height: 120px;
+            resize: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(26, 115, 232, 0.2);
+        }
+
+        button:hover {
+            background-color: #1765cc;
+            box-shadow: 0 4px 8px rgba(26, 115, 232, 0.3);
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #response-msg {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 10px;
+            display: none;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        #response-msg.success {
+            background-color: #e6f4ea;
+            color: var(--success);
+            display: block;
+        }
+
+        #response-msg.error {
+            background-color: #fce8e6;
+            color: #d93025;
+            display: block;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-card fade-in">
+        <h2>Share Your Suggestions</h2>
+
+        <form id="suggestionForm">
+            <div class="input-group">
+                <label>Full Name</label>
+                <input type="text" id="name" required placeholder="John Doe">
+            </div>
+
+            <div class="input-group">
+                <label>Email Address (Optional)</label>
+                <input type="email" id="email" placeholder="john@example.com">
+            </div>
+
+            <div class="input-group">
+                <label>Your Suggestion</label>
+                <textarea id="suggestion" required placeholder="How can we improve?"></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn">Submit Suggestion</button>
+        </form>
+
+        <div id="response-msg"></div>
+    </div>
+
+    <script>
+        document.getElementById('suggestionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const suggestion = document.getElementById('suggestion').value;
+            const submitBtn = document.getElementById('submitBtn');
+            const msgBox = document.getElementById('response-msg');
+
+            // Reset and show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Sending...';
+            msgBox.className = '';
+            msgBox.style.display = 'none';
+
+            try {
+                const response = await fetch('/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name, email, suggestion }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    msgBox.innerText = data.message;
+                    msgBox.classList.add('success');
+                    document.getElementById('suggestionForm').reset();
+                } else {
+                    msgBox.innerText = data.error || 'Something went wrong';
+                    msgBox.classList.add('error');
+                }
+            } catch (error) {
+                msgBox.innerText = 'Could not connect to the server';
+                msgBox.classList.add('error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Submit Suggestion';
+                msgBox.style.display = 'block';
+            }
+        });
+    </script>
+
+</body>
+
+</html>
