@@ -18,7 +18,7 @@
 8. **Program 08**: Image Slideshow
 9. **Program 09**: Digital Clock
 10. **Program 10**: Dropdown Menu Selection
-11. **Program 11**: Student JSON Parsing & Weather API
+11. **Program 11**: Student JSON Parsing
 12. **Program 12**: Weather Application
 13. **Program 13**: Dynamic Theme Switcher
 14. **Program 14**: Bootstrap Responsive Layout
@@ -50,6 +50,16 @@
 38. **Program 38**: Secure Authentication System with Password Hashing
 39. **Program 39**: Full Stack Application Deployment Guide
 40. **Program 40**: [CivicNode – UN SDG 11 Mini Project (Django)](https://github.com/albinmmathew/CivicNode)
+
+---
+
+## ⚙️ Setup Instructions (Program 12: Weather App)
+
+To prevent API keys from being exposed, the Weather Application requires a `config.js` file.
+
+1. Copy `config.js.example` and rename it to `config.js`.
+2. Open `config.js` and replace `"YOUR_API_KEY_HERE"` with your actual OpenWeatherMap API key.
+3. Open `12_weather_app.html` in your browser.
 
 ---
 © 2026 Albin Mammen Mathew
