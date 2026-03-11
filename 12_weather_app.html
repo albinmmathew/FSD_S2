@@ -173,9 +173,8 @@ Date: 09/01/2026
         </div>
     </div>
 
+    <script src="config.js"></script>
     <script>
-        const apiKey = 'dcaab4373edcdcfa4373a6d0894e7a60';
-
         async function getWeather() {
             const city = document.getElementById('cityInput').value;
             const weatherInfo = document.getElementById('weatherInfo');
@@ -183,7 +182,7 @@ Date: 09/01/2026
 
             if (!city) return;
 
-            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${CONFIG.WEATHER_API_KEY}&units=metric`;
 
             try {
                 const response = await fetch(url);

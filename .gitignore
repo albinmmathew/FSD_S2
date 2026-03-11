@@ -24,6 +24,9 @@ staticfiles/
 .DS_Store
 Thumbs.db
 
+# Secrets
+config.js
+
 # Project Docs (Optional: Keep if you want to track them, but usually ignored if personal notes)
 FSD LAB.docx
 FSD_ALBIN.pdf
