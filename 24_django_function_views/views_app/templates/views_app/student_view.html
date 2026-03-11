@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Function Based View | Students</title>
+</head>
+
+<body>
+    <h1>Student Details (FBV)</h1>
+    <hr>
+    {% if students %}
+    {% for s in students %}
+    <p>Name: {{ s.first_name }} {{ s.last_name }}</p>
+    <p>Roll No: {{ s.roll_number }}</p>
+    <p>Email: {{ s.email }}</p>
+    <hr>
+    {% endfor %}
+    {% else %}
+    <p>No student records found.</p>
+    {% endif %}
+</body>
+
+</html>
