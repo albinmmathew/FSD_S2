@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dynamic Routing | Student List</title>
+</head>
+
+<body>
+    <h1>Student List (Dynamic Routing)</h1>
+    <hr>
+    {% for s in students %}
+    <p>
+        {{ s.first_name }} {{ s.last_name }}
+        | <a href="{% url 'student_edit' s.pk %}">Edit</a>
+    </p>
+    {% endfor %}
+</body>
+
+</html>
