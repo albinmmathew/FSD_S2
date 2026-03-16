@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Protected Dashboard</title>
+</head>
+
+<body>
+    <h1>Protected Dashboard</h1>
+    <p>Welcome, <strong>{{ user.username }}</strong>! This page is protected by the @login_required decorator.</p>
+    <hr>
+    <a href="{% url 'index' %}">Back to Home</a>
+    | <form action="{% url 'logout' %}" method="post" style="display:inline;">{% csrf_token %}<button
+            type="submit">Logout</button></form>
+</body>
+
+</html>
