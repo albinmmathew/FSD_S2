@@ -1,0 +1,14 @@
+{% extends 'student_app/base.html' %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="actions">
+        <a href="{% url 'student_list' %}" class="btn btn-back">Cancel</a>
+        <button type="submit" class="btn btn-add">Save Record</button>
+    </div>
+</form>
+{% endblock %}

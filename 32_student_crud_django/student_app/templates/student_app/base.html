@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Student Management</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .btn-add {
+            background: #27ae60;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .btn-edit {
+            background: #2980b9;
+            color: white;
+            margin-right: 5px;
+        }
+
+        .btn-delete {
+            background: #c0392b;
+            color: white;
+        }
+
+        .btn-back {
+            background: #95a5a6;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #f8f9fa;
+            color: #444;
+        }
+
+        tr:hover {
+            background: #fcfcfc;
+        }
+
+        form p {
+            margin-bottom: 15px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .actions {
+            text-align: right;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+
+</html>
