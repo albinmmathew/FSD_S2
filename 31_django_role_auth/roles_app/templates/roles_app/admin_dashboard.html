@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #fff5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .dashboard-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border-top: 5px solid #dc3545;
+            width: 400px;
+        }
+
+        h1 {
+            color: #dc3545;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        .user-name {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 1.5rem;
+        }
+
+        .logout-btn:hover {
+            background: #a71d2a;
+        }
+
+        .nav-link {
+            display: block;
+            margin-top: 1rem;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-card">
+        <h1>Admin Console</h1>
+        <p>Welcome, <span class="user-name">{{ user.username }}</span></p>
+        <p>You have full <strong>Administrative</strong> access.</p>
+
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+
+        <a href="{% url 'home' %}" class="nav-link">Return to Home</a>
+    </div>
+</body>
+
+</html>
