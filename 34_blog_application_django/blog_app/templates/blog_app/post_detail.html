@@ -1,0 +1,12 @@
+{% extends 'blog_app/base.html' %}
+
+{% block content %}
+<a href="{% url 'post_list' %}" class="btn-back">&larr; Back to Feed</a>
+<article>
+    <h1>{{ post.title }}</h1>
+    <div class="date">By {{ post.author }} | {{ post.created_at|date:"F j, Y" }}</div>
+    <div class="content">
+        {{ post.content|linebreaks }}
+    </div>
+</article>
+{% endblock %}

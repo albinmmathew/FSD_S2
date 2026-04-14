@@ -1,0 +1,14 @@
+{% extends 'blog_app/base.html' %}
+
+{% block content %}
+{% for post in posts %}
+<div class="post-card">
+    <h2><a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a></h2>
+    <div class="date">Published on {{ post.created_at|date:"F j, Y" }} by {{ post.author }}</div>
+    <p>{{ post.content|truncatewords:30 }}</p>
+    <a href="{% url 'post_detail' post.slug %}" style="color: #007bff;">Read More &rarr;</a>
+</div>
+{% empty %}
+<p style="text-align: center; color: #777;">No blog posts yet. Stay tuned!</p>
+{% endfor %}
+{% endblock %}
