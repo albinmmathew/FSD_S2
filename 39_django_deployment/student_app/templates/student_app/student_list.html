@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management | Full Stack Deployment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --secondary: #4f46e5;
+            --white: #ffffff;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 3rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            background: var(--white);
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.8rem;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-add {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39);
+        }
+
+        .btn-add:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+        }
+
+        .btn-edit {
+            background: #eef2ff;
+            color: var(--primary);
+        }
+
+        .btn-edit:hover {
+            background: #e0e7ff;
+            color: var(--secondary);
+        }
+
+        .btn-delete {
+            background: #fff1f2;
+            color: var(--danger);
+        }
+
+        .btn-delete:hover {
+            background: #ffe4e6;
+        }
+
+        .table-container {
+            background: var(--white);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 1.25rem 2rem;
+            text-align: left;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        th {
+            background: #f8fafc;
+            font-weight: 800;
+            color: #64748b;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: #fdfdfd;
+        }
+
+        .roll-badge {
+            background: #f1f5f9;
+            padding: 0.3rem 0.6rem;
+            border-radius: 0.5rem;
+            font-weight: 800;
+            color: #475569;
+            font-size: 0.85rem;
+        }
+
+        .actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 5rem 2rem;
+            color: #94a3b8;
+        }
+
+        .course-tag {
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>University SMS</h1>
+                <p style="margin: 5px 0 0 0; color: #64748b; font-size: 0.9rem;">Student Management System</p>
+            </div>
+            <a href="{% url 'student_add' %}" class="btn btn-add">
+                <span style="font-size: 1.2rem;">+</span> Register Student
+            </a>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Roll No</th>
+                        <th>Student Name</th>
+                        <th>Email Address</th>
+                        <th>Course</th>
+                        <th>Management</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td><span class="roll-badge">{{ student.roll_no }}</span></td>
+                        <td><span style="font-weight: 600; color: #1e293b;">{{ student.name }}</span></td>
+                        <td><span style="color: #64748b; font-size: 0.9rem;">{{ student.email }}</span></td>
+                        <td><span class="course-tag">{{ student.course }}</span></td>
+                        <td class="actions">
+                            <a href="{% url 'student_edit' student.pk %}" class="btn btn-edit">Edit</a>
+                            <a href="{% url 'student_delete' student.pk %}" class="btn btn-delete">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="empty">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🎓</div>
+                            <p style="font-size: 1.1rem; font-weight: 600; color: #64748b;">No students registered yet
+                            </p>
+                            <p style="font-size: 0.9rem;">Get started by registering your first student.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; color: #94a3b8; font-size: 0.8rem;">
+            Deployed via Program 39 Full Stack Deployment Guide
+        </div>
+    </div>
+</body>
+
+</html>

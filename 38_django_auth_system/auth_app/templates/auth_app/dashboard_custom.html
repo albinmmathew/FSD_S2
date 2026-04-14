@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | Hashing Demo</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            padding: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            max-width: 700px;
+            margin: 2rem auto;
+        }
+
+        h1 {
+            color: #1e293b;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 1rem;
+        }
+
+        .hash-box {
+            background: #1e293b;
+            color: #10b981;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: monospace;
+            word-break: break-all;
+            margin-top: 1rem;
+            border-left: 4px solid #10b981;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #64748b;
+            margin-top: 1.5rem;
+            display: block;
+        }
+
+        .btn-logout {
+            background: #ef4444;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h1>User Dashboard</h1>
+        <p>Welcome, <strong>{{ user.username }}</strong>. Below you can see how your password is stored in the database.
+        </p>
+
+        <span class="label">Username</span>
+        <div style="font-size: 1.2rem; background: #f1f5f9; padding: 0.5rem; border-radius: 0.5rem;">{{ user.username }}
+        </div>
+
+        <span class="label">Hashed Password (from Database)</span>
+        <div class="hash-box">{{ user.password_hash }}</div>
+
+        <p style="font-size: 0.85rem; color: #64748b; margin-top: 1.5rem;">
+            <em>Note: The password shown above is hashed using Django's PBKDF2 algorithm. No one, including the admin,
+                can see your original password.</em>
+        </p>
+
+        <a href="{% url 'logout' %}" class="btn-logout">Log Out</a>
+    </div>
+</body>
+
+</html>
